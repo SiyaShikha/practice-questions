@@ -25,8 +25,12 @@ const truthValuesOf = function (numbers) {
 };
 
 // reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
+const reverse = function (string) {
+  return string.split('').reverse().join('');
+}
+
 const reversedStringsOf = function (strings) {
-  return strings.map(function (str) { return str.split('').reverse().join('') });
+  return strings.map(reverse);
 };
 
 // double letters of ["cat", "dog", "bat"] => ["ccaatt", "ddoogg", "bbaatt"]
@@ -34,21 +38,41 @@ const double = function (char) {
   return char + char;
 }
 const doubleLettersOf = function (strings) {
-  return strings.map(function (str) {return str.split('').map(double).join('')});
+  return strings.map(function (str) { return str.split('').map(double).join('') });
 };
 
 // boolean negation of [true, false, true] => [false, true, false]
-const negatedBooleansOf = function (booleans) { };
+const negatedBooleansOf = function (booleans) {
+  return booleans.map(function (bool) { return !bool });
+};
 
 // character codes of ["a", "b", "c"] => [97, 98, 99]
 // Use the `charCodeAt` method on each string
-const charCodesOf = function (strings) { };
+const charCode = function (char) {
+  return char.charCodeAt();
+}
+
+const charCodesOf = function (strings) {
+  return strings.map(charCode);
+};
 
 // extract domain names from ["user1@gmail.com", "admin@yahoo.com"] => ["gmail.com", "yahoo.com"]
-const domainNamesOf = function (emails) { };
+const domain = function (email) {
+  return email.slice(email.indexOf('@') + 1);
+}
+
+const domainNamesOf = function (emails) {
+  return emails.map(domain);
+};
 
 // split words in ["hello world", "goodbye moon"] => [["hello", "world"], ["goodbye", "moon"]]
-const splitWordsOf = function (strings) { };
+const splitWords = function (string) {
+  return string.split(' ');
+}
+
+const splitWordsOf = function (strings) {
+  return strings.map(splitWords);
+};
 
 // join arrays of [["a", "b"], ["c", "d"]] => ["ab", "cd"]
 const joinedArraysOf = function (arrayOfArrays) { };
@@ -449,6 +473,22 @@ const testAll = function () {
   testAllFunctions(doubleLettersOf, ["cat", "dog", "bat"], ["ccaatt", "ddoogg", "bbaatt"], failed);
   testAllFunctions(doubleLettersOf, ["cat"], ["ccaatt"], failed);
   testAllFunctions(doubleLettersOf, [], [], failed);
+
+  testAllFunctions(negatedBooleansOf, [true, false, true], [false, true, false], failed);
+  testAllFunctions(negatedBooleansOf, [true], [false], failed);
+  testAllFunctions(negatedBooleansOf, [], [], failed);
+
+  testAllFunctions(charCodesOf, ["a", "b", "c"], [97, 98, 99], failed);
+  testAllFunctions(charCodesOf, ['A'], [65], failed);
+  testAllFunctions(charCodesOf, [], [], failed);
+
+  testAllFunctions(domainNamesOf, ["user1@gmail.com", "admin@yahoo.com"], ["gmail.com", "yahoo.com"], failed);
+  testAllFunctions(domainNamesOf, ["user1@gmail.com"], ["gmail.com"], failed);
+  testAllFunctions(domainNamesOf, [], [], failed);
+
+  testAllFunctions(splitWordsOf, ["hello world", "goodbye moon"], [["hello", "world"], ["goodbye", "moon"]], failed);
+  testAllFunctions(splitWordsOf, ["hello world"], [["hello", "world"]], failed);
+  testAllFunctions(splitWordsOf, [], [], failed);
 
   displayFailed(failed);
 }
