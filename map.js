@@ -10,25 +10,32 @@ const lengthsOf = function (strings) {
 
 // uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
 const uppercaseOf = function (strings) {
-  return strings.map(function (str) {return str.toUpperCase()});
+  return strings.map(function (str) { return str.toUpperCase() });
 };
 
 // first characters of ["apple", "banana", "kiwi"] => ["a", "b", "k"]
 const firstCharactersOf = function (strings) {
-  return strings.map(function (str) {return str.at(0)});
+  return strings.map(function (str) { return str.at(0) });
 };
 
 // truth values of [0, 1, 2, 3] => [false, true, true, true]
 // Assume non-zero numbers are true, and zero is false
 const truthValuesOf = function (numbers) {
-  return numbers.map(function (num) {return !!num});
+  return numbers.map(function (num) { return Boolean(num) });
 };
 
 // reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
-const reversedStringsOf = function (strings) { };
+const reversedStringsOf = function (strings) {
+  return strings.map(function (str) { return str.split('').reverse().join('') });
+};
 
-// double letters of ["cat", "dog", "bat"] => ["ccaat", "ddoog", "bbaatt"]
-const doubleLettersOf = function (strings) { };
+// double letters of ["cat", "dog", "bat"] => ["ccaatt", "ddoogg", "bbaatt"]
+const double = function (char) {
+  return char + char;
+}
+const doubleLettersOf = function (strings) {
+  return strings.map(function (str) {return str.split('').map(double).join('')});
+};
 
 // boolean negation of [true, false, true] => [false, true, false]
 const negatedBooleansOf = function (booleans) { };
@@ -384,6 +391,8 @@ const summarizeBookChapters = function (books) { };
 // => [{name: "Concert", attendees: ["John Doe", "Jane Smith"]}, {name: "Conference", attendees: ["Bob Brown"]}]
 const getEventAttendees = function (events) { };
 
+// ********************************** TESTING **********************************
+
 function areEqual(array1, array2) {
   if (array1.length !== array2.length) {
     return false;
@@ -432,6 +441,14 @@ const testAll = function () {
   testAllFunctions(truthValuesOf, [0], [false], failed);
   testAllFunctions(truthValuesOf, [2], [true], failed);
   testAllFunctions(truthValuesOf, [], [], failed);
+
+  testAllFunctions(reversedStringsOf, ["hello", "world"], ["olleh", "dlrow"], failed);
+  testAllFunctions(reversedStringsOf, ["hello"], ["olleh"], failed);
+  testAllFunctions(reversedStringsOf, [], [], failed);
+
+  testAllFunctions(doubleLettersOf, ["cat", "dog", "bat"], ["ccaatt", "ddoogg", "bbaatt"], failed);
+  testAllFunctions(doubleLettersOf, ["cat"], ["ccaatt"], failed);
+  testAllFunctions(doubleLettersOf, [], [], failed);
 
   displayFailed(failed);
 }
