@@ -1,5 +1,7 @@
 // squares of [1, 2, 3] => [1, 4, 9]
-const squaresOf = function (numbers) { };
+const squaresOf = function (numbers) {
+  return numbers.map(function (num) { return num * num });
+};
 
 // lengths of ["apple", "banana", "kiwi"] => [5, 6, 4]
 const lengthsOf = function (strings) { };
@@ -373,3 +375,30 @@ const summarizeBookChapters = function (books) { };
 // [{name: "Concert", attendees: [{firstName: "John", lastName: "Doe"}, {firstName: "Jane", lastName: "Smith"}]}, {name: "Conference", attendees: [{firstName: "Bob", lastName: "Brown"}]}]
 // => [{name: "Concert", attendees: ["John Doe", "Jane Smith"]}, {name: "Conference", attendees: ["Bob Brown"]}]
 const getEventAttendees = function (events) { };
+
+function testAllFunctions(functionName, argument, expected, failed) {
+  const actual = functionName(argument);
+
+  if (expected !== actual) {
+    failed.push([expected, actual]);
+  }
+}
+
+const displayFailed = function (failed) {
+  if (failed.length === 0) {
+    console.log('All Tests Passed!');
+    return;
+  }
+
+  console.table(failed);
+}
+
+const testAll = function () {
+  const failed = [];
+
+  testAllFunctions(squaresOf, [1, 2, 3, 4], [1, 4, 9, 16], failed);
+
+  displayFailed(failed);
+}
+
+testAll();
