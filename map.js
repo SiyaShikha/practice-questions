@@ -376,10 +376,18 @@ const summarizeBookChapters = function (books) { };
 // => [{name: "Concert", attendees: ["John Doe", "Jane Smith"]}, {name: "Conference", attendees: ["Bob Brown"]}]
 const getEventAttendees = function (events) { };
 
+function areEqual(array1, array2) {
+  if (array1.length !== array2.length) {
+    return false;
+  }
+
+  return array1.every(function(x, index) {return x === array2[index]});
+}
+
 function testAllFunctions(functionName, argument, expected, failed) {
   const actual = functionName(argument);
 
-  if (expected !== actual) {
+  if (!areEqual(actual, expected)) {
     failed.push([expected, actual]);
   }
 }
@@ -397,6 +405,8 @@ const testAll = function () {
   const failed = [];
 
   testAllFunctions(squaresOf, [1, 2, 3, 4], [1, 4, 9, 16], failed);
+  testAllFunctions(squaresOf, [5], [25], failed);
+  testAllFunctions(squaresOf, [], [], failed);
 
   displayFailed(failed);
 }
