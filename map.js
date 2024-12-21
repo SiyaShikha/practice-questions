@@ -117,11 +117,31 @@ const reversedArraysOf = function (arrays) {
 };
 
 // remove vowels from ["apple", "banana", "grape"] => ["ppl", "bnn", "grp"]
-const withoutVowelsOf = function (strings) { };
+const consonent = function (char) {
+  return !isVowel(char) ? char : '';
+}
+
+const removeVowels = function (string) {
+  return Array.from(string).map(consonent).join('');
+}
+
+const withoutVowelsOf = function (strings) {
+  return strings.map(removeVowels);
+};
 
 // cumulative sums of [[1, 2, 3], [4, 5, 6]] => [[1, 3, 6], [4, 9, 15]]
 // Example: cumulative sum of [1, 2, 3] is [1, 1+2, 1+2+3]
-const cumulativeSumsOf = function (arrays) { };
+const runningSum = function (element) {
+  let sum = 0;
+  return element.map(function (num) {
+    sum += num;
+    return sum;
+  });
+}
+
+const cumulativeSumsOf = function (arrays) {
+  return arrays.map(runningSum);
+};
 
 // reverse words in ["hello world", "goodbye moon"] => ["olleh dlrow", "eybdoog noom"]
 const reversedWordsOf = function (strings) { };
@@ -536,6 +556,14 @@ const testAll = function () {
   testAllFunctions(reversedArraysOf, [[1, 2, 3, 4]], [[4, 3, 2, 1]], failed);
   testAllFunctions(reversedArraysOf, [[4]], [[4]], failed);
   testAllFunctions(reversedArraysOf, [], [], failed);
+
+  testAllFunctions(withoutVowelsOf, ["apple", "banana", "grape"], ["ppl", "bnn", "grp"], failed);
+  testAllFunctions(withoutVowelsOf, ["apple"], ["ppl"], failed);
+  testAllFunctions(withoutVowelsOf, [], [], failed);
+
+  testAllFunctions(cumulativeSumsOf, [[1, 2, 3], [4, 5, 6]], [[1, 3, 6], [4, 9, 15]], failed);
+  testAllFunctions(cumulativeSumsOf, [[1, 2, 3, 4]], [[1, 3, 6, 10]], failed);
+  testAllFunctions(cumulativeSumsOf, [], [], failed);
 
   displayFailed(failed);
 }
