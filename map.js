@@ -5,20 +5,24 @@ const squaresOf = function (numbers) {
 
 // lengths of ["apple", "banana", "kiwi"] => [5, 6, 4]
 const lengthsOf = function (strings) {
-  return strings.map(function (string) { return string.length; });
+  return strings.map(function (str) { return str.length; });
 };
 
 // uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
 const uppercaseOf = function (strings) {
-  return strings.map(function (string) {return string.toUpperCase()});
+  return strings.map(function (str) {return str.toUpperCase()});
 };
 
 // first characters of ["apple", "banana", "kiwi"] => ["a", "b", "k"]
-const firstCharactersOf = function (strings) { };
+const firstCharactersOf = function (strings) {
+  return strings.map(function (str) {return str.at(0)});
+};
 
 // truth values of [0, 1, 2, 3] => [false, true, true, true]
 // Assume non-zero numbers are true, and zero is false
-const truthValuesOf = function (numbers) { };
+const truthValuesOf = function (numbers) {
+  return numbers.map(function (num) {return !!num});
+};
 
 // reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
 const reversedStringsOf = function (strings) { };
@@ -419,6 +423,15 @@ const testAll = function () {
   testAllFunctions(uppercaseOf, ["hello", "world"], ["HELLO", "WORLD"], failed);
   testAllFunctions(uppercaseOf, ["hello"], ["HELLO"], failed);
   testAllFunctions(uppercaseOf, [], [], failed);
+
+  testAllFunctions(firstCharactersOf, ["apple", "banana", "kiwi"], ["a", "b", "k"], failed);
+  testAllFunctions(firstCharactersOf, ["apple"], ["a"], failed);
+  testAllFunctions(uppercaseOf, [], [], failed);
+
+  testAllFunctions(truthValuesOf, [0, 1, 2, 3], [false, true, true, true], failed);
+  testAllFunctions(truthValuesOf, [0], [false], failed);
+  testAllFunctions(truthValuesOf, [2], [true], failed);
+  testAllFunctions(truthValuesOf, [], [], failed);
 
   displayFailed(failed);
 }
