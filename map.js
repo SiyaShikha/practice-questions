@@ -1,13 +1,17 @@
 // squares of [1, 2, 3] => [1, 4, 9]
 const squaresOf = function (numbers) {
-  return numbers.map(function (num) { return num * num });
+  return numbers.map(function (num) { return num * num; });
 };
 
 // lengths of ["apple", "banana", "kiwi"] => [5, 6, 4]
-const lengthsOf = function (strings) { };
+const lengthsOf = function (strings) {
+  return strings.map(function (string) { return string.length; });
+};
 
 // uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
-const uppercaseOf = function (strings) { };
+const uppercaseOf = function (strings) {
+  return strings.map(function (string) {return string.toUpperCase()});
+};
 
 // first characters of ["apple", "banana", "kiwi"] => ["a", "b", "k"]
 const firstCharactersOf = function (strings) { };
@@ -381,7 +385,7 @@ function areEqual(array1, array2) {
     return false;
   }
 
-  return array1.every(function(x, index) {return x === array2[index]});
+  return array1.every(function (element, index) { return element === array2[index] });
 }
 
 function testAllFunctions(functionName, argument, expected, failed) {
@@ -407,6 +411,14 @@ const testAll = function () {
   testAllFunctions(squaresOf, [1, 2, 3, 4], [1, 4, 9, 16], failed);
   testAllFunctions(squaresOf, [5], [25], failed);
   testAllFunctions(squaresOf, [], [], failed);
+
+  testAllFunctions(lengthsOf, ["apple", "banana", "kiwi"], [5, 6, 4], failed);
+  testAllFunctions(lengthsOf, ["apple"], [5], failed);
+  testAllFunctions(lengthsOf, [], [], failed);
+
+  testAllFunctions(uppercaseOf, ["hello", "world"], ["HELLO", "WORLD"], failed);
+  testAllFunctions(uppercaseOf, ["hello"], ["HELLO"], failed);
+  testAllFunctions(uppercaseOf, [], [], failed);
 
   displayFailed(failed);
 }
