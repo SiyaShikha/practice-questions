@@ -25,12 +25,12 @@ const truthValuesOf = function (numbers) {
 };
 
 // reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
-const reverse = function (string) {
+const reverseString = function (string) {
   return string.split('').reverse().join('');
 }
 
 const reversedStringsOf = function (strings) {
-  return strings.map(reverse);
+  return strings.map(reverseString);
 };
 
 // double letters of ["cat", "dog", "bat"] => ["ccaatt", "ddoogg", "bbaatt"]
@@ -75,16 +75,46 @@ const splitWordsOf = function (strings) {
 };
 
 // join arrays of [["a", "b"], ["c", "d"]] => ["ab", "cd"]
-const joinedArraysOf = function (arrayOfArrays) { };
+const joinArray = function (array) {
+  return array.join('');
+}
+const joinedArraysOf = function (arrayOfArrays) {
+  return arrayOfArrays.map(joinArray);
+};
 
 // repeat strings in ["hi", "bye"] => ["hihi", "byebye"]
-const repeatedStringsOf = function (strings) { };
+const repeat = function (times) {
+  return function (string) {
+    return string.repeat(times);
+  }
+}
+
+const repeatTwice = repeat(2);
+
+const repeatedStringsOf = function (strings) {
+  return strings.map(repeatTwice);
+};
 
 // count vowels in ["apple", "banana", "grape"] => [2, 3, 2]
-const countVowelsOf = function (strings) { };
+const isVowel = function (char) {
+  return 'aeiou'.includes(char);
+}
+const countVowels = function (string) {
+  return Array.from(string).filter(isVowel).length;
+}
+
+const countVowelsOf = function (strings) {
+  return strings.map(countVowels);
+};
 
 // reverse arrays of [[1, 2, 3], [4, 5, 6]] => [[3, 2, 1], [6, 5, 4]]
-const reversedArraysOf = function (arrays) { };
+const reverseArray = function (array) {
+  return array.reverse();
+}
+
+const reversedArraysOf = function (arrays) {
+  return arrays.map(reverseArray);
+};
 
 // remove vowels from ["apple", "banana", "grape"] => ["ppl", "bnn", "grp"]
 const withoutVowelsOf = function (strings) { };
@@ -489,6 +519,23 @@ const testAll = function () {
   testAllFunctions(splitWordsOf, ["hello world", "goodbye moon"], [["hello", "world"], ["goodbye", "moon"]], failed);
   testAllFunctions(splitWordsOf, ["hello world"], [["hello", "world"]], failed);
   testAllFunctions(splitWordsOf, [], [], failed);
+
+  testAllFunctions(joinedArraysOf, [["a", "b"], ["c", "d"]], ["ab", "cd"], failed);
+  testAllFunctions(joinedArraysOf, [["a", "b"]], ["ab"], failed);
+  testAllFunctions(joinedArraysOf, [], [], failed);
+
+  testAllFunctions(repeatedStringsOf, ["hi", "bye"], ["hihi", "byebye"], failed);
+  testAllFunctions(repeatedStringsOf, ["hi"], ["hihi"], failed);
+  testAllFunctions(repeatedStringsOf, [], [], failed);
+
+  testAllFunctions(countVowelsOf, ["apple", "banana", "grape"], [2, 3, 2], failed);
+  testAllFunctions(countVowelsOf, ["apple"], [2], failed);
+  testAllFunctions(countVowelsOf, [], [], failed);
+
+  testAllFunctions(reversedArraysOf, [[1, 2, 3], [4, 5, 6]], [[3, 2, 1], [6, 5, 4]], failed);
+  testAllFunctions(reversedArraysOf, [[1, 2, 3, 4]], [[4, 3, 2, 1]], failed);
+  testAllFunctions(reversedArraysOf, [[4]], [[4]], failed);
+  testAllFunctions(reversedArraysOf, [], [], failed);
 
   displayFailed(failed);
 }
