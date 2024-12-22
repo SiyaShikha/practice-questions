@@ -1,17 +1,45 @@
 // even numbers [1, 2, 3, 4, 5] => [2, 4]
-const filterEvenNumbers = function (numbers) { };
+const isEven = function (num) {
+  return num % 2 === 0;
+}
+const filterEvenNumbers = function (numbers) {
+  return numbers.filter(isEven);
+};
 
 // words with more than 5 letters ["apple", "banana", "kiwi", "grape"] => ["banana"]
-const filterLongWords = function (words) { };
+const wordLengthMoreThan5 = function (word) {
+  return word.length > 5;
+}
+const filterLongWords = function (words) {
+  return words.filter(wordLengthMoreThan5);
+};
 
 // people older than 30 [{name: "Alice", age: 25}, {name: "Bob", age: 35}] => [{name: "Bob", age: 35}]
-const filterAdults = function (people) { };
+const ageAbove30 = function (person) {
+  return person.age > 30;
+}
+
+const filterAdults = function (people) {
+  return people.filter(ageAbove30);
+};
 
 // active users [{username: "alice", active: true}, {username: "bob", active: false}] => [{username: "alice", active: true}]
-const filterActiveUsers = function (users) { };
+const activeUsers = function (user) {
+  return user.active === true;
+}
+
+const filterActiveUsers = function (users) {
+  return users.filter(activeUsers);
+};
 
 // numbers greater than 10 [5, 12, 7, 18, 3] => [12, 18]
-const filterNumbersGreaterThanTen = function (numbers) { };
+const greaterThan10 = function (num) {
+  return num > 10;
+}
+
+const filterNumbersGreaterThanTen = function (numbers) {
+  return numbers.filter(greaterThan10);
+};
 
 // books with more than 200 pages [{title: "Book 1", pages: 150}, {title: "Book 2", pages: 250}] => [{title: "Book 2", pages: 250}]
 const filterLongBooks = function (books) { };
@@ -215,13 +243,13 @@ const filterUsersByPostComments = function (users, minComments) { };
 const filterUsersByPostCategory = function (users, category) { };
 
 // Filter users who have a certain number of followers and have posted in the last 30 days [{user: {name: "Tom", followers: 1000, lastPostDate: "2024-11-10"}}] => [{user: {name: "Tom", followers: 1000, lastPostDate: "2024-11-10"}}]
-const filterActiveUsers = function (users, minFollowers, daysAgo) { };
+// const filterActiveUsers = function (users, minFollowers, daysAgo) { };
 
 // Filter posts that have at least one hashtag from a list of trending hashtags [{post: {title: "Post 1", hashtags: ["#food", "#vegan"]}}] => [{post: {title: "Post 1", hashtags: ["#food", "#vegan"]}}]
 const filterPostsByHashtags = function (posts, trendingHashtags) { };
 
 // Filter users who have shared at least one post that received a specific number of likes [{user: {name: "Lucy", posts: [{title: "Post 1", likes: 500}, {title: "Post 2", likes: 100}]}}] => [{user: {name: "Lucy", posts: [{title: "Post 1", likes: 500}, {title: "Post 2", likes: 100}]}}]
-const filterUsersByPostLikes = function (users, minLikes) { };
+// const filterUsersByPostLikes = function (users, minLikes) { };
 
 // Filter posts that have a certain number of comments and are from a specific location [{post: {title: "Post 1", comments: 150, location: "Paris"}}] => [{post: {title: "Post 1", comments: 150, location: "Paris"}}]
 const filterPostsByCommentsAndLocation = function (posts, minComments, location) { };
@@ -337,3 +365,62 @@ const findInStockItems = function (items, lookup) { };
 // Input: ["Lion", "Elephant", "Shark"], { "Lion": { habitat: "Jungle" }, "Elephant": { habitat: "Jungle" }, "Shark": { habitat: "Ocean" } } , "Jungle"
 // Output: ["Lion", "Elephant"]
 const findAnimalsByHabitat = function (animals, lookup) { };
+
+// ********************************** TESTING **********************************
+
+function areEqual(array1, array2) {
+  if (array1.length !== array2.length) {
+    return false;
+  }
+
+  return array1.every(function (element, index) { return element === array2[index] });
+}
+
+function testAllFunctions(functionName, argument, expected, failed) {
+  const actual = functionName(argument);
+
+  if (!areEqual(actual, expected)) {
+    failed.push([expected, actual]);
+  }
+}
+
+const displayFailed = function (failed) {
+  if (failed.length === 0) {
+    console.log('All Tests Passed!');
+    return;
+  }
+
+  console.table(failed);
+}
+
+const testAll = function () {
+  const failed = [];
+
+  testAllFunctions(filterEvenNumbers, [1, 2, 3, 4, 5], [2, 4], failed);
+  testAllFunctions(filterEvenNumbers, [2], [2], failed);
+  testAllFunctions(filterEvenNumbers, [1], [], failed);
+  testAllFunctions(filterEvenNumbers, [], [], failed);
+
+  testAllFunctions(filterLongWords, ["apple", "banana", "kiwi", "grape"], ["banana"], failed);
+  testAllFunctions(filterLongWords, ["apple"], [], failed);
+  testAllFunctions(filterLongWords, ["banana"], ["banana"], failed);
+  testAllFunctions(filterLongWords, [], [], failed);
+
+  testAllFunctions(filterAdults, [{ name: "Alice", age: 25 }, { name: "Bob", age: 35 }], [{ name: "Bob", age: 35 }], failed);
+  testAllFunctions(filterAdults, [{ name: "Alice", age: 45 }, { name: "Bob", age: 35 }], [{ name: "Alice", age: 45 }, { name: "Bob", age: 35 }], failed);
+  testAllFunctions(filterAdults, [], [], failed);
+
+  testAllFunctions(filterActiveUsers, [{username: "alice", active: true}, {username: "bob", active: false}], [{username: "alice", active: true}], failed);
+  testAllFunctions(filterActiveUsers, [{username: "alice", active: true}, {username: "bob", active: true}], [{username: "alice", active: true}, {username: "bob", active: true}], failed);
+  testAllFunctions(filterActiveUsers, [{username: "alice", active: false}, {username: "bob", active: false}], [], failed);
+  testAllFunctions(filterActiveUsers, [], [], failed);
+
+  testAllFunctions(filterNumbersGreaterThanTen, [5, 12, 7, 18, 3], [12, 18], failed);
+  testAllFunctions(filterNumbersGreaterThanTen, [1,2,3], [], failed);
+  testAllFunctions(filterNumbersGreaterThanTen, [10,20,30], [20,30], failed);
+  testAllFunctions(filterNumbersGreaterThanTen, [], [], failed);
+
+  displayFailed(failed);
+}
+
+testAll();
