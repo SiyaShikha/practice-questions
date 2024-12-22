@@ -66,20 +66,13 @@ const domainNamesOf = function (emails) {
 };
 
 // split words in ["hello world", "goodbye moon"] => [["hello", "world"], ["goodbye", "moon"]]
-const splitWords = function (string) {
-  return string.split(' ');
-}
-
 const splitWordsOf = function (strings) {
-  return strings.map(splitWords);
+  return strings.map((string) => string.split(' '));
 };
 
 // join arrays of [["a", "b"], ["c", "d"]] => ["ab", "cd"]
-const joinArray = function (array) {
-  return array.join('');
-}
 const joinedArraysOf = function (arrayOfArrays) {
-  return arrayOfArrays.map(joinArray);
+  return arrayOfArrays.map((array) => array.join(''));
 };
 
 // repeat strings in ["hi", "bye"] => ["hihi", "byebye"]
@@ -99,6 +92,7 @@ const repeatedStringsOf = function (strings) {
 const isVowel = function (char) {
   return 'aeiouAEIOU'.includes(char);
 }
+
 const countVowels = function (string) {
   return Array.from(string).filter(isVowel).length;
 }

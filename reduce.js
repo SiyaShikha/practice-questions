@@ -1,17 +1,31 @@
 // sumOf([1, 2, 3, 4]) => 10
-const sumOf = function (numbers) { }
+const add = function (sum, num) {
+  return sum + num;
+}
+
+const sumOf = function (numbers) {
+  return numbers.reduce(add, 0);
+}
 
 // productOf([1, 2, 3, 4]) => 24
-const productOf = function (numbers) { }
+const productOf = function (numbers) {
+  return numbers.reduce((product, num) => product * num, 1);
+}
 
 // averageOf([1, 2, 3, 4, 5]) => 3
-const averageOf = function (numbers) { }
+const averageOf = function (numbers) {
+  return numbers.reduce(add, 0) / numbers.length;
+}
 
 // minOf([3, 1, 4, 1, 5, 9, 2]) => 1
-const minOf = function (numbers) { }
+const minOf = function (numbers) {
+  return numbers.reduce((initial, num) => Math.min(initial, num), Infinity);
+}
 
 // maxOf([3, 1, 4, 1, 5, 9, 2]) => 9
-const maxOf = function (numbers) { }
+const maxOf = function (numbers) {
+  return numbers.reduce((initial, num) => Math.max(initial, num), -Infinity);
+}
 
 // sumPositiveNumbers([1, -2, 3, -4]) => 4
 const sumPositiveNumbers = function (numbers) { }
@@ -165,3 +179,59 @@ const findMinMax = function (numbers) { }
 
 // sumByCategory([{ category: 'A', value: 10 }, { category: 'B', value: 20 }, { category: 'A', value: 30 }]) => { A: 40, B: 20 }
 const sumByCategory = function (items) { }
+
+
+// ********************************** TESTING **********************************
+
+function areEqual(array1, array2) {
+  if (array1.length !== array2.length) {
+    return false;
+  }
+
+  return array1.every(function (element, index) { return element === array2[index] });
+}
+
+function testAllFunctions(functionName, argument, expected, failed) {
+  const actual = functionName(argument);
+
+  if (actual !== expected) {
+    failed.push([expected, actual]);
+  }
+}
+
+const displayFailed = function (failed) {
+  if (failed.length === 0) {
+    console.log('All Tests Passed!');
+    return;
+  }
+
+  console.table(failed);
+}
+
+const testAll = function () {
+  const failed = [];
+
+  testAllFunctions(sumOf, [1, 2, 3, 4], 10, failed);
+  testAllFunctions(sumOf, [1], 1, failed);
+  testAllFunctions(sumOf, [], 0, failed);
+
+  testAllFunctions(productOf, [1, 2, 3, 4], 24, failed);
+  testAllFunctions(productOf, [2], 2, failed);
+  testAllFunctions(productOf, [], 1, failed);
+
+  testAllFunctions(averageOf, [1, 2, 3, 4, 5], 3, failed);
+  testAllFunctions(averageOf, [2], 2, failed);
+  testAllFunctions(averageOf, [], NaN, failed);
+
+  testAllFunctions(minOf, [3, 1, 4, 1, 5, 9, 2], 1, failed);
+  testAllFunctions(minOf, [2], 2, failed);
+  testAllFunctions(minOf, [], Infinity, failed);
+
+  testAllFunctions(maxOf, [3, 1, 4, 1, 5, 9, 2], 9, failed);
+  testAllFunctions(maxOf, [2], 2, failed);
+  testAllFunctions(maxOf, [], -Infinity, failed);
+
+  displayFailed(failed);
+}
+
+testAll();
