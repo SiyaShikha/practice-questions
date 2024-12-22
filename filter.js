@@ -42,19 +42,52 @@ const filterNumbersGreaterThanTen = function (numbers) {
 };
 
 // books with more than 200 pages [{title: "Book 1", pages: 150}, {title: "Book 2", pages: 250}] => [{title: "Book 2", pages: 250}]
-const filterLongBooks = function (books) { };
+const above200Pages = function (book) {
+  return book.pages > 200;
+}
+
+const filterLongBooks = function (books) {
+  return books.filter(above200Pages);
+};
 
 // users with incomplete profiles [{username: "alice", profileComplete: true}, {username: "bob", profileComplete: false}] => [{username: "bob", profileComplete: false}]
-const filterIncompleteProfiles = function (users) { };
+const incompleteProfiles = function (user) {
+  return user.profileComplete === false;
+}
+
+const filterIncompleteProfiles = function (users) {
+  return users.filter(incompleteProfiles);
+};
 
 // students with grades above 80 [{name: "John", grade: 75}, {name: "Jane", grade: 85}] => [{name: "Jane", grade: 85}]
-const filterHighGrades = function (students) { };
+const gradeAbove80 = function (student) {
+  return student.grade > 80;
+}
+
+const filterHighGrades = function (students) {
+  return students.filter(gradeAbove80);
+};
 
 // products that are in stock [{product: "apple", inStock: true}, {product: "banana", inStock: false}] => [{product: "apple", inStock: true}]
-const filterInStockProducts = function (products) { };
+const isInStock = function (product) {
+  return product.inStock === true;
+}
+
+const filterInStockProducts = function (products) {
+  return products.filter(isInStock);
+};
 
 // orders placed in the last 30 days [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}] => [{orderDate: "2024-12-01"}]
-const filterRecentOrders = function (orders) { };
+const last30Days = function (dateBefore30Days) {
+  return function (date) {
+    return date.orderDate > dateBefore30Days;
+  }
+}
+
+const filterRecentOrders = function (orders) {
+  const dateBefore30Days = '2024-11-22';
+  return orders.filter(last30Days(dateBefore30Days)); 
+};
 
 // products with a price lower than the average [{name: "item1", price: 10}, {name: "item2", price: 20}, {name: "item3", price: 5}] => [{name: "item1", price: 10}, {name: "item3", price: 5}]
 const filterBelowAveragePrice = function (products) { };
@@ -410,15 +443,35 @@ const testAll = function () {
   testAllFunctions(filterAdults, [{ name: "Alice", age: 45 }, { name: "Bob", age: 35 }], [{ name: "Alice", age: 45 }, { name: "Bob", age: 35 }], failed);
   testAllFunctions(filterAdults, [], [], failed);
 
-  testAllFunctions(filterActiveUsers, [{username: "alice", active: true}, {username: "bob", active: false}], [{username: "alice", active: true}], failed);
-  testAllFunctions(filterActiveUsers, [{username: "alice", active: true}, {username: "bob", active: true}], [{username: "alice", active: true}, {username: "bob", active: true}], failed);
-  testAllFunctions(filterActiveUsers, [{username: "alice", active: false}, {username: "bob", active: false}], [], failed);
+  testAllFunctions(filterActiveUsers, [{ username: "alice", active: true }, { username: "bob", active: false }], [{ username: "alice", active: true }], failed);
+  testAllFunctions(filterActiveUsers, [{ username: "alice", active: true }, { username: "bob", active: true }], [{ username: "alice", active: true }, { username: "bob", active: true }], failed);
+  testAllFunctions(filterActiveUsers, [{ username: "alice", active: false }, { username: "bob", active: false }], [], failed);
   testAllFunctions(filterActiveUsers, [], [], failed);
 
   testAllFunctions(filterNumbersGreaterThanTen, [5, 12, 7, 18, 3], [12, 18], failed);
-  testAllFunctions(filterNumbersGreaterThanTen, [1,2,3], [], failed);
-  testAllFunctions(filterNumbersGreaterThanTen, [10,20,30], [20,30], failed);
+  testAllFunctions(filterNumbersGreaterThanTen, [1, 2, 3], [], failed);
+  testAllFunctions(filterNumbersGreaterThanTen, [10, 20, 30], [20, 30], failed);
   testAllFunctions(filterNumbersGreaterThanTen, [], [], failed);
+
+  testAllFunctions(filterLongBooks, [{ title: "Book 1", pages: 150 }, { title: "Book 2", pages: 250 }], [{ title: "Book 2", pages: 250 }], failed);
+  testAllFunctions(filterLongBooks, [{ title: "Book 1", pages: 150 }, { title: "Book 2", pages: 100 }], [], failed);
+  testAllFunctions(filterLongBooks, [], [], failed);
+
+  testAllFunctions(filterIncompleteProfiles, [{ username: "alice", profileComplete: true }, { username: "bob", profileComplete: false }], [{ username: "bob", profileComplete: false }], failed);
+  testAllFunctions(filterIncompleteProfiles, [{ username: "alice", profileComplete: true }, { username: "bob", profileComplete: true }], [], failed);
+  testAllFunctions(filterIncompleteProfiles, [], [], failed);
+
+  testAllFunctions(filterHighGrades, [{name: "John", grade: 75}, {name: "Jane", grade: 85}], [{name: "Jane", grade: 85}], failed);
+  testAllFunctions(filterHighGrades, [{name: "John", grade: 75}, {name: "Jane", grade: 55}], [], failed);
+  testAllFunctions(filterHighGrades, [], [], failed);
+
+  testAllFunctions(filterInStockProducts, [{product: "apple", inStock: true}, {product: "banana", inStock: false}], [{product: "apple", inStock: true}], failed);
+  testAllFunctions(filterInStockProducts, [{product: "apple", inStock: false}, {product: "banana", inStock: false}], [], failed);
+  testAllFunctions(filterInStockProducts, [], [], failed);
+
+  testAllFunctions(filterRecentOrders, [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}], [{orderDate: "2024-12-01"}], failed);
+  // testAllFunctions(filterRecentOrders, [], [], failed);
+  testAllFunctions(filterRecentOrders, [], [], failed);
 
   displayFailed(failed);
 }
