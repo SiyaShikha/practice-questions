@@ -470,7 +470,6 @@ const testAll = function () {
   testAllFunctions(filterInStockProducts, [], [], failed);
 
   testAllFunctions(filterRecentOrders, [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}], [{orderDate: "2024-12-01"}], failed);
-  // testAllFunctions(filterRecentOrders, [], [], failed);
   testAllFunctions(filterRecentOrders, [], [], failed);
 
   displayFailed(failed);

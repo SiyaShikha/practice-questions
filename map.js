@@ -26,7 +26,7 @@ const truthValuesOf = function (numbers) {
 
 // reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
 const reverseString = function (string) {
-  return string.split('').reverse().join('');
+  return [...string].reverse().join('');
 }
 
 const reversedStringsOf = function (strings) {
@@ -144,7 +144,13 @@ const cumulativeSumsOf = function (arrays) {
 };
 
 // reverse words in ["hello world", "goodbye moon"] => ["olleh dlrow", "eybdoog noom"]
-const reversedWordsOf = function (strings) { };
+const reversed = function (string) {
+  return string.split(' ').map(reverseString).join(' ');
+}
+
+const reversedWordsOf = function (strings) {
+  return strings.map(reversed);
+};
 
 // extract unique characters from ["apple", "banana", "grape"] => ["apl", "ban", "gra"]
 // Maintain the order of their first appearance in each string
@@ -564,6 +570,9 @@ const testAll = function () {
   testAllFunctions(cumulativeSumsOf, [[1, 2, 3], [4, 5, 6]], [[1, 3, 6], [4, 9, 15]], failed);
   testAllFunctions(cumulativeSumsOf, [[1, 2, 3, 4]], [[1, 3, 6, 10]], failed);
   testAllFunctions(cumulativeSumsOf, [], [], failed);
+
+  testAllFunctions(reversedWordsOf, ["hello world", "goodbye moon"], ["olleh dlrow", "eybdoog noom"], failed);
+  testAllFunctions(reversedWordsOf, [], [], failed);
 
   displayFailed(failed);
 }
