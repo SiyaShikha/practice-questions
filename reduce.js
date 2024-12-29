@@ -1,68 +1,80 @@
-// sumOf([1, 2, 3, 4]) => 10
-const add = function (sum, num) {
-  return sum + num;
-};
+import { add, isOdd, isEven, isPositive, product, square } from "./maths.js";
 
-const sumOf = function (numbers) {
-  return numbers.reduce(add, 0);
-};
+// sumOf([1, 2, 3, 4]) => 10
+const sumOf = (numbers) => numbers.reduce(add, 0);
+console.log("sum :", sumOf([1, 2, 3, 4]));
 
 // productOf([1, 2, 3, 4]) => 24
-const productOf = function (numbers) {
-  return numbers.reduce((product, num) => product * num, 1);
-};
+const productOf = (numbers) => numbers.reduce(product, 1);
+console.log("product :", productOf([1, 2, 3, 4]));
 
 // averageOf([1, 2, 3, 4, 5]) => 3
-const averageOf = function (numbers) {
-  return numbers.reduce(add, 0) / numbers.length;
-};
+const averageOf = (numbers) => numbers.reduce(add, 0) / numbers.length;
+console.log("average :", averageOf([1, 2, 3, 4, 5]));
 
 // minOf([3, 1, 4, 1, 5, 9, 2]) => 1
-const minOf = function (numbers) {
-  return numbers.reduce((min, num) => Math.min(min, num), Infinity);
-};
+const minOf = (numbers) =>
+  numbers.reduce((min, num) => Math.min(min, num), Infinity);
+
+console.log("minimum value :", minOf([3, 1, 4, 1, 5, 9, 2]));
 
 // maxOf([3, 1, 4, 1, 5, 9, 2]) => 9
-const maxOf = function (numbers) {
-  return numbers.reduce((max, num) => Math.max(max, num), -Infinity);
-};
+const maxOf = (numbers) =>
+  numbers.reduce((max, num) => Math.max(max, num), -Infinity);
+
+console.log("maximum value :", maxOf([3, 1, 4, 1, 5, 9, 2]));
 
 // sumPositiveNumbers([1, -2, 3, -4]) => 4
-const sumPositiveNumbers = function (numbers) {
-  return numbers.filter((num) => num > 0).reduce(add, 0);
-};
+const sumPositiveNumbers = (numbers) =>
+  numbers.filter(isPositive).reduce(add, 0);
+
+console.log("sum of positives :", sumPositiveNumbers([1, -2, 3, -4]));
 
 // sumOfSquares([1, 2, 3, 4]) => 30
-const sumOfSquares = function (numbers) {
-  return numbers.map((num) => num * num).reduce(add, 0);
-};
+const sumOfSquares = (numbers) => numbers.map(square).reduce(add, 0);
+console.log("sum of squares :", sumOfSquares([1, 2, 3, 4]));
 
 // sumOfOddNumbers([1, 2, 3, 4, 5]) => 9
-const sumOfOddNumbers = function (numbers) {
-  return numbers.filter((num) => (num & 1) === 1).reduce(add, 0);
-};
-
-// countNegativeNumbers([1, -2, 3, -4]) => 2
-const countNegativeNumbers = function (numbers) {
-  return numbers.reduce((count, num) => (num < 0 ? count + 1 : count), 0);
-};
+const sumOfOddNumbers = (numbers) => numbers.filter(isOdd).reduce(add, 0);
+console.log("sum of odd numbers :", sumOfOddNumbers([1, 2, 3, 4, 5]));
 
 // findSumOfEvenSquares([1, 2, 3, 4]) => 20
-const findSumOfEvenSquares = function (numbers) {
-  return numbers
-    .filter((num) => (num & 1) === 0)
-    .map((num) => num * num)
-    .reduce(add, 0);
-};
+const findSumOfEvenSquares = (numbers) =>
+  numbers.filter(isEven).map(square).reduce(add, 0);
+
+console.log("sum of even squares :", findSumOfEvenSquares([1, 2, 3, 4]));
 
 // concatenateWords(["hello", "world"]) => "helloworld"
-const concatenateWords = function (words) {};
+const concatenateWords = function (words) {
+  return words.reduce((str, word) => str.concat(word), "");
+};
+
+console.log(
+  "concatenated words :",
+  concatenateWords(["hello", "beautiful", "world"])
+);
 
 // longestWord(["apple", "banana", "cherry", "kiwi"]) => "banana"
-const longestWord = function (words) {};
+const longestStr = (str1, str2) => (str1.length > str2.length ? str1 : str2);
+const longestWord = (words) => {
+  return words.reduce(longestStr, "");
+};
+
+console.log(
+  "longest word :",
+  longestWord(["apple", "banana", "cherry", "kiwi"])
+);
 
 // shortestWord(["apple", "banana", "cherry", "kiwi"]) => "kiwi"
-const shortestWord = function (words) {};
+const shortestStr = (str1, str2) => (str1.length < str2.length ? str1 : str2);
+const shortestWord = (words) => {
+  return words.reduce(shortestStr);
+};
+
+console.log(
+  "longest word :",
+  shortestWord(["apple", "banana", "cherry", "kiwi"])
+);
 
 // joinWithComma(["apple", "banana", "cherry"]) => "apple,banana,cherry"
 const joinWithComma = function (words) {};
@@ -74,7 +86,11 @@ const reverseWords = function (words) {};
 const joinWordsWithSpace = function (words) {};
 
 // concatenateNames(["John", "Jane", "Doe"]) => "JohnJaneDoe"
-const concatenateNames = function (names) {};
+const concatenateNames = function (names) {
+  return concatenateWords(names);
+};
+
+console.log("concatenated name :", concatenateNames(["John", "Jane", "Doe"]));
 
 // countVowelsInWords(["hello", "world"]) => "eoo"
 const countVowelsInWords = function (words) {};
@@ -101,39 +117,21 @@ const flattenArray = function (arrays) {
   return arrays.reduce(flat, []);
 };
 
+console.log(
+  "flatten array :",
+  flattenArray([
+    [1, 2],
+    [3, 4],
+    [5, 6],
+  ])
+);
+
 // uniqueNumbers([1, 2, 2, 3, 4, 4, 5]) => [1, 2, 3, 4, 5]
 const uniqueNumbers = function (numbers) {
   return numbers.reduce((u, num) => (u.includes(num) ? u : [...u, num]), []);
 };
 
-// groupByLength(["apple", "banana", "cherry", "date"]) => { 5: ["apple", "cherry"], 6: ["banana"], 4: ["date"] }
-const groups = (group, string) => {
-  const existingGroup = group[string.length] || [];
-  existingGroup.push(string);
-  group[string.length] = existingGroup;
-
-  return group;
-};
-
-const groupByLength = function (strings) {
-  return strings.reduce(groups, {});
-};
-
-// countOccurrences(["apple", "banana", "cherry", "banana"]) => { apple: 1, banana: 2, cherry: 1 }
-const countOccurrences = (strings) =>
-  strings.reduce((frequencies, string) => {
-    frequencies[string] = (frequencies[string] || 0) + 1;
-    return frequencies;
-  }, {});
-
-const _countOccurrences = (strings) =>
-  strings.reduce(
-    (frequencies, string) =>
-      string in frequencies
-        ? { ...frequencies, [string]: frequencies[string] + 1 }
-        : { ...frequencies, [string]: 1 },
-    {}
-  );
+console.log("uniqueNumbers :", uniqueNumbers([1, 2, 2, 3, 4, 4, 5]));
 
 // mergeObjects([{ a: 1, b: 2 }, { b: 3, c: 4 }, { a: 5 }]) => { a: 6, b: 5, c: 4 }
 const mergeObjects = function (objects) {};
@@ -160,7 +158,14 @@ const ascendingGroups = function (numbers) {};
 const flattenToObject = function (pairs) {};
 
 // longestString(["apple", "banana", "cherry", "dates"]) => "banana"
-const longestString = function (strings) {};
+
+// const longestString = function (strings) {
+//   return strings.reduce(
+//     (longestStr, string) =>
+//       string.length > longestStr.length ? string : longestStr,
+//     ""
+//   );
+// };
 
 // mergeIntervals([[1,3], [2,4], [5,7]]) => [[1, 4], [5, 7]]
 const mergeIntervals = function (intervals) {};
@@ -180,9 +185,6 @@ const cumulativeSum = function (numbers) {};
 // equalChunksOfAtLeast([1, 1, 1, 2, 2, 5, 1, 1]) => [[1,1,1], [2,2], [1,1]]
 const equalChunksOfAtLeast = function (numbers) {};
 
-// groupByType([1, 'a', 2, 'b', 3, 'c', 4]) => { number: [1, 2, 3, 4], string: ['a', 'b', 'c'] }
-const groupByType = function (array) {};
-
 // runningAverages([1, 2, 3, 4]) => [1, 1.5, 2, 2.5]
 const runningAverages = function (numbers) {};
 
@@ -192,14 +194,8 @@ const flattenObject = function (obj) {};
 // splitIntoSubarrays([1,2,3,4,5,6,7], 3) => [[1,2,3], [4,5,6], [7]]
 const splitIntoSubarrays = function (arr, size) {};
 
-// groupByFirstLetter(["apple", "banana", "cherry", "date"]) => { a: ["apple"], b: ["banana"], c: ["cherry"], d: ["date"] }
-const groupByFirstLetter = function (words) {};
-
 // findFirstNonRepeated([1,2,3,4,2,1,5]) => 3
 const findFirstNonRepeated = function (numbers) {};
-
-// countVowels(["apple", "banana", "grape"]) => { a: 6, e: 3, i: 0, o: 0, u: 0 }
-const countVowels = function (words) {};
 
 // mergeConsecutiveDuplicates([1,1,1,2,3,3,4]) => [1,2,3,4]
 const mergeConsecutiveDuplicates = function (array) {};
@@ -216,11 +212,17 @@ const nestedAverage = function (nestedNumbers) {};
 // cartesianProduct([1, 2], ['a', 'b']) => [[1, 'a'], [1, 'b'], [2, 'a'], [2, 'b']]
 const cartesianProduct = function (arr1, arr2) {};
 
-// groupByDate([{ date: '2024-01-01', value: 10 }, { date: '2024-01-01', value: 20 }, { date: '2024-01-02', value: 30 }]) => { '2024-01-01': [10, 20], '2024-01-02': [30] }
-const groupByDate = function (records) {};
-
 // findMinMax([1, 2, 3, 4, 5]) => { min: 1, max: 5 }
-const findMinMax = function (numbers) {};
+const findMinMax = function (numbers) {
+  return numbers.reduce(
+    (obj, num) => {
+      obj.min = Math.min(obj.min, num);
+      obj.max = Math.max(obj.max, num);
+      return obj;
+    },
+    { min: Infinity, max: -Infinity }
+  );
+};
 
 // sumByCategory([{ category: 'A', value: 10 }, { category: 'B', value: 20 }, { category: 'A', value: 30 }]) => { A: 40, B: 20 }
 const sumByCategory = function (items) {};
@@ -285,4 +287,4 @@ const testAll = function () {
   displayFailed(failed);
 };
 
-testAll();
+// testAll();
