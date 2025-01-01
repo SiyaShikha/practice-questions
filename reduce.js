@@ -153,42 +153,89 @@ console.log(
 );
 
 // duplicateNumbers([1, 2, 3]) => [1, 1, 2, 2, 3, 3]
-const duplicateNumbers = function (numbers) {};
+const duplicateNumbers = (numbers) => {
+  return numbers.reduce((duplicate, num) => [...duplicate, num, num], []);
+};
+
+console.log("20. array with duplicate numbers :", duplicateNumbers([1, 2, 3]));
 
 // concatenateArrays([[1, 2], [3, 4], [5, 6]]) => [1, 2, 3, 4, 5, 6]
-const concatenateArrays = function (arrays) {};
+const concatenateArrays = (arrays) => {
+  return arrays.reduce((concatedArray, e) => [...concatedArray, ...e], []);
+};
+
+console.log(
+  "21: concatenated array :",
+  concatenateArrays([
+    [1, 2],
+    [3, 4],
+    [5, 6],
+  ])
+);
 
 // flattenArray([[1, 2], [3, 4], [5, 6]]) => [1, 2, 3, 4, 5, 6]
 const flattenArray = (arrays) => {
-  return arrays.reduce((flatArray, e) => {
-    const element = Array.isArray(e) ? e : [e];
-    return [...flatArray, ...element];
+  return arrays.reduce((flatArray, element) => {
+    const e = Array.isArray(element) ? element : [element];
+    return [...flatArray, ...e];
   }, []);
 };
 
 console.log("22. flatten array :", flattenArray([[1, 2], [3, 4], 5, 6]));
 
 // uniqueNumbers([1, 2, 2, 3, 4, 4, 5]) => [1, 2, 3, 4, 5]
-const uniqueNumbers = function (numbers) {
+const uniqueNumbers = (numbers) => {
   return numbers.reduce((u, num) => (u.includes(num) ? u : [...u, num]), []);
 };
 
 console.log("23. uniqueNumbers :", uniqueNumbers([1, 2, 2, 3, 4, 4, 5]));
 
 // mergeObjects([{ a: 1, b: 2 }, { b: 3, c: 4 }, { a: 5 }]) => { a: 6, b: 5, c: 4 }
-const mergeObjects = function (objects) {};
+const mergeObjects = (objects) => {
+  return objects.reduce((mergedObj, obj) => {
+    Object.keys(obj).forEach((key) => {
+      mergedObj[key] = (mergedObj[key] || 0) + obj[key];
+    });
+    return mergedObj;
+  }, {});
+};
+
+console.log(
+  "24. merged objects with sum of values :",
+  mergeObjects([{ a: 1, b: 2 }, { b: 3, c: 4 }, { a: 5 }])
+);
 
 // zip(["a", "b", "c"], [1, 2, 3]) => { "a": 1, "b": 2, "c": 3 }
-const zip = function (keys, values) {};
+const zip = (keys, values) => {
+  return keys.reduce((object, key, index) => {
+    object[key] = values[index];
+    return object;
+  }, {});
+};
+
+console.log("25. zip keys to values :", zip(["a", "b", "c"], [1, 2, 3]));
 
 // makeObject(["city", "country"], ["Paris", "France"]) => { "city": "Paris", "country": "France" }
-const makeObject = function (keys, values) {};
+const makeObject = function (keys, values) {
+  return zip(keys, values);
+};
+
+console.log(
+  "26. object from keys and values :",
+  makeObject(["city", "country"], ["Paris", "France"])
+);
 
 // invertObject({ "a": 1, "b": 2, "c": 3 }) => { 1: "a", 2: "b", 3: "c" }
-const invertObject = function (obj) {};
+const invertObject = function (obj) {
+  const keys = Object.keys(obj);
+  const values = Object.values(obj);
+  return zip(values, keys);
+};
 
-// mergeArrays([["a", 1], ["b", 2]], [["c", 3], ["d", 4]]) => { "a": 1, "b": 2, "c": 3, "d": 4 }
-const mergeArrays = function (arr1, arr2) {};
+console.log(
+  "27. invert keys to values and vice versa :",
+  invertObject({ a: 1, b: 2, c: 3 })
+);
 
 // groupByProperty([{name: "John", age: 25}, {name: "Jane", age: 30}]) => { 25: [{name: "John", age: 25}], 30: [{name: "Jane", age: 30}] }
 const groupByProperty = function (objects) {};
@@ -197,17 +244,42 @@ const groupByProperty = function (objects) {};
 const ascendingGroups = function (numbers) {};
 
 // flattenToObject([['a', 1], ['b', 2], ['c', 3]]) => { a: 1, b: 2, c: 3 }
-const flattenToObject = function (pairs) {};
+const flattenToObject = (pairs) => {
+  return pairs.reduce((object, pair) => {
+    object[pair[0]] = pair[1];
+    return object;
+  }, {});
+};
 
-// longestString(["apple", "banana", "cherry", "dates"]) => "banana"
+console.log(
+  "30. flatten array pairs to object :",
+  flattenToObject([
+    ["a", 1],
+    ["b", 2],
+    ["c", 3],
+  ])
+);
 
-// const longestString = function (strings) {
-//   return strings.reduce(
-//     (longestStr, string) =>
-//       string.length > longestStr.length ? string : longestStr,
-//     ""
-//   );
-// };
+// mergeArrays([["a", 1], ["b", 2]], [["c", 3], ["d", 4]]) => { "a": 1, "b": 2, "c": 3, "d": 4 }
+const mergeArrays = function (arr1, arr2) {
+  const obj1 = flattenToObject(arr1);
+  const obj2 = flattenToObject(arr2);
+  return mergeObjects([obj1, obj2]);
+};
+
+console.log(
+  "31. merged object from arrays of pairs :",
+  mergeArrays(
+    [
+      ["a", 1],
+      ["b", 2],
+    ],
+    [
+      ["c", 3],
+      ["d", 4],
+    ]
+  )
+);
 
 // mergeIntervals([[1,3], [2,4], [5,7]]) => [[1, 4], [5, 7]]
 const mergeIntervals = function (intervals) {};
@@ -216,7 +288,19 @@ const mergeIntervals = function (intervals) {};
 const sumAndCount = function (numbers) {};
 
 // deepFlatten([[1,2], [3,4, [5,6]], 7]) => [1,2,3,4,5,6,7]
-const deepFlatten = function (arr) {};
+const deepFlatten = (arr) => {
+  return arr.reduce((flatArray, e) => {
+    if (Array.isArray(e)) {
+      return [...flatArray, ...deepFlatten(e)];
+    }
+    return [...flatArray, e];
+  }, []);
+};
+
+console.log(
+  "34. deepFlatten array :",
+  deepFlatten([[1, 2], [3, 4, [5, 6]], 7])
+);
 
 // findMax([1, 2, 3, 4, 5]) => 5
 const findMax = function (numbers) {};
@@ -237,7 +321,7 @@ const flattenObject = function (obj) {};
 const splitIntoSubarrays = function (arr, size) {};
 
 // findFirstNonRepeated([1,2,3,4,2,1,5]) => 3
-const findFirstNonRepeated = function (numbers) {};
+const findFirstNonRepeated = (numbers) => {};
 
 // mergeConsecutiveDuplicates([1,1,1,2,3,3,4]) => [1,2,3,4]
 const mergeConsecutiveDuplicates = function (array) {};
@@ -255,7 +339,7 @@ const nestedAverage = function (nestedNumbers) {};
 const cartesianProduct = function (arr1, arr2) {};
 
 // findMinMax([1, 2, 3, 4, 5]) => { min: 1, max: 5 }
-const findMinMax = function (numbers) {
+const findMinMax = (numbers) => {
   return numbers.reduce(
     (obj, num) => {
       obj.min = Math.min(obj.min, num);
@@ -265,6 +349,8 @@ const findMinMax = function (numbers) {
     { min: Infinity, max: -Infinity }
   );
 };
+
+console.log("47. min and max values :", findMinMax([1, 2, 3, 4, 5]));
 
 // sumByCategory([{ category: 'A', value: 10 }, { category: 'B', value: 20 }, { category: 'A', value: 30 }]) => { A: 40, B: 20 }
 const sumByCategory = function (items) {};
